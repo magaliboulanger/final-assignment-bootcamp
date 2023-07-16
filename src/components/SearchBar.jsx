@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./SearchBar.css";
+import { BsSearch } from "react-icons/bs";
+import { IconContext } from "react-icons";
 
-function SearchBar(setResults) {
+function SearchBar({ setResults }) {
   const [input, setInput] = useState("");
 
   const fetchData = (input) => {
@@ -19,30 +21,38 @@ function SearchBar(setResults) {
         withCredentials: true,
         mode: "cors",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
         },
       }
     )
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        //console.log(json.data.results);
+        // const results = json.data.results.filter((result) => {
+        //    return result.name && result.title;
+        // });
+        setResults(json.data.results);
+      });
   };
 
   const handleChange = (value) => {
     setInput(value);
   };
 
-  const handleClick = () => {
-    fetchData(input);
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      fetchData(input);
+    }  
   };
 
   return (
     <div className="input-wrapper">
       <input
-        placeholder="Type to search..."
+        placeholder="🔍 Buscar"
         value={input}
         onChange={(e) => handleChange(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
-      <button onClick={()=>handleClick()}>Buscar</button>
     </div>
   );
 }
