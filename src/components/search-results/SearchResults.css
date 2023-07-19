@@ -1,0 +1,34 @@
+.search-result {
+  /* UI Properties */
+  opacity: 1;
+  padding: 5vh 2vw 5vh 2vw;
+  top: 146px;
+  width: 256px;
+  height: 380px;
+  position: relative;
+}
+
+.search-result:hover {
+  background-color: transparent;
+}
+
+.character-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.character-name {
+  bottom: 15vh;
+  left: 1vw;
+  width: 54px;
+  height: 23px;
+  /* UI Properties */
+  text-align: left;
+  font: normal normal bold 19px/23px SF UI Text;
+  letter-spacing: -0.25px;
+  color: #ffffff;
+  opacity: 1;
+  position: relative;
+  vertical-align: bottom;
+}
