@@ -5,6 +5,8 @@
   display: flex;
   outline: none;
   align-items: center;
+  border-left: 1px solid rgb(244,244,252);
+  padding-left: 5vw; 
 }
 
 input {

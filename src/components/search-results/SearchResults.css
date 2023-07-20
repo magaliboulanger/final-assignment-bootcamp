@@ -1,7 +1,7 @@
 .search-result {
   /* UI Properties */
   opacity: 1;
-  padding: 5vh 2vw 5vh 2vw;
+  margin: 15px 14px 15px 14px;
   top: 146px;
   width: 256px;
   height: 380px;
@@ -16,19 +16,19 @@
   width: 100%;
   height: 100%;
   object-fit: fill;
-}
+  border-radius: 3px;
+  background: transparent linear-gradient(26deg, #00000000 0%, #00000080 100%) 0% 0% no-repeat padding-box;
+ }
 
 .character-name {
-  bottom: 15vh;
-  left: 1vw;
-  width: 54px;
-  height: 23px;
+  left: 2vw;
+  bottom:2vh;
+  width: 50%;
   /* UI Properties */
   text-align: left;
   font: normal normal bold 19px/23px SF UI Text;
   letter-spacing: -0.25px;
   color: #ffffff;
   opacity: 1;
-  position: relative;
-  vertical-align: bottom;
+  position: absolute;
 }
