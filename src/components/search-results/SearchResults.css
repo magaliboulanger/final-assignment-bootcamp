@@ -17,13 +17,24 @@
 
 .character-name {
   left: 2vw;
-  bottom:2vh;
+  bottom: 2vh;
   width: 50%;
   /* UI Properties */
   text-align: left;
-  font: normal normal bold 19px/23px 'SF UI Text';
+  font: normal normal bold 19px/23px "SF UI Text";
   letter-spacing: -0.25px;
   color: #ffffff;
   opacity: 1;
   position: absolute;
+}
+
+.save-character{
+  position: absolute;
+  top:20px;
+  left: 15vw;
+}
+
+.white-star{
+  height: 19px;
+  color: #FFFFFF;
 }

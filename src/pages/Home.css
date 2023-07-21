@@ -1,5 +1,5 @@
 .main-content {
-  background: rgb(244,244,252) ;
+  background: rgb(244, 244, 252);
 }
 
 .nav-bar {
@@ -26,8 +26,8 @@
 }
 
 .star-container {
+  width: 100%;
   background-color: transparent;
-  margin-left: 30vw;
   outline: none;
   border: none;
   background: none;
