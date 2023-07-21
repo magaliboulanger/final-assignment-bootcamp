@@ -48,7 +48,7 @@ function SearchBar({ setResults }) {
   return (
     <div className="input-wrapper">
       <input
-        placeholder="🔍 Buscar"
+        placeholder="Buscar"
         value={input}
         onChange={(e) => handleChange(e.target.value)}
         onKeyDown={handleKeyDown}
