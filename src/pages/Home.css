@@ -1,11 +1,14 @@
 .main-content {
   background: rgb(244, 244, 252);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-bar {
   background-color: transparent;
   width: 100vw;
-  height: 10vh;
+  height: 100px;
   overflow: hidden;
   display: flex;
   align-items: center;

@@ -5,15 +5,22 @@ import { SearchResultsList } from "../components/search-results-list/SearchResul
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
-import "./Home.css"
+import "./Home.css";
+import ComicsListComponent from "../components/comic-list/ComicsListComponent";
 
 export default function Home() {
   const [results, setResults] = useState([]);
   const [isStarred, setIsStarred] = useState(false);
+  const [showComicsList, setComicsListShown] = useState(false);
 
   const toggleStar = () => {
     setIsStarred(!isStarred);
   };
+
+  const toggleComicsList = () => {
+    setComicsListShown(!showComicsList);
+  };
+
   return (
     <div>
       <header>
@@ -33,7 +40,7 @@ export default function Home() {
       </header>
       <div className="main-content">
         {results && results.length > 0 && (
-          <SearchResultsList results={results} />
+          <SearchResultsList results={results} toggle={toggleComicsList} />
         )}
       </div>
     </div>

@@ -27,11 +27,8 @@ function SearchBar({ setResults }) {
     )
       .then((response) => response.json())
       .then((json) => {
-        //console.log(json.data.results);
-        // const results = json.data.results.filter((result) => {
-        //    return result.name && result.title;
-        // });
         setResults(json.data.results);
+        console.log(json.data.results);
       });
   };
 

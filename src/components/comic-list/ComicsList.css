@@ -1,0 +1,12 @@
+.comics-list {
+  position: fixed;
+  width: 437px;
+  height: 448px;
+  background-color:blue;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border-radius: 10px;
+}
+
+
