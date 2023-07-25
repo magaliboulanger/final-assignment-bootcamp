@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
-import React from "react";
-import "../App.css"
+import React, { useState } from "react";
+import "../App.css";
 
 export default function ComicPage(comicData) {
   const { key } = useParams();
   const row = comicData.comicData.filter((reg) => reg.id == key)[0];
+
   const filterByRole = (role) => {
     const creators = row.creators.items.filter((reg) => reg.role == role);
     return creators.length == 0
@@ -28,14 +29,17 @@ export default function ComicPage(comicData) {
     });
 
   return (
-    <div className= "main-content">
+    <div className="main-content">
       <div className="comic-detail">
-        <img className="comic-img" src={row.thumbnail.path + "." + row.thumbnail.extension}></img>
+        <img
+          className="comic-img"
+          src={row.thumbnail.path + "." + row.thumbnail.extension}
+        ></img>
       </div>
       <div className="comic-detail">
         <h1 className="title">{row.title}</h1>
         <div>
-          <p>Published: {formattedDate!=""?formattedDate:"-"}</p>
+          <p>Published: {formattedDate != "" ? formattedDate : "-"}</p>
           <p>Writer/s: {filterByRole("writer")}</p>
           <p>Penciler/s: {filterByRole("penciler")}</p>
           <p>Cover artist/s: {filterByRole("penciller (cover)")}</p>

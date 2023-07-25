@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <SearchBar setResults={setResults} />
         <Routes>
-          <Route path="/" element={<Home/>} setComics={setComics} />
+          <Route path="/" element={<Home setComics={setComics} />} />
           <Route
             path="/characters"
             element={

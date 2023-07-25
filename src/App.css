@@ -28,22 +28,6 @@ p {
   margin: 4vh 5vw 4vh 4vw;
 }
 
-.star {
-  color: #a8a8a8;
-  opacity: 1;
-  top: 20px;
-  left: 1150px;
-  width: 26px;
-  height: 24px;
-}
-
-.star-container {
-  width: 100%;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  background: none;
-}
 .comics-list {
   width: 437px;
   height: 448px;
@@ -67,7 +51,9 @@ p {
   text-align: start;
   font-family: "Roboto", sans-serif;
   color: #3e3e3e;
+  display:flex;
 }
+
 .modal-content {
   height: 100%;
   width: 100%;
@@ -151,9 +137,9 @@ input {
   object-fit: cover;
   border-radius: 3px;
 }
-.comic-img{
-    width: 100%;
-    object-fit: cover;
+.comic-img {
+  width: 100%;
+  object-fit: cover;
 }
 
 .character-name {
@@ -166,12 +152,6 @@ input {
   color: #ffffff;
   opacity: 1;
   position: absolute;
-}
-
-.save-character {
-  position: absolute;
-  top: 20px;
-  left: 15vw;
 }
 
 .white-star {
@@ -204,4 +184,36 @@ input {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 100%;
+  position: relative;
+}
+
+.white{
+  color:#fff
+}
+
+.grey{
+  color:#3e3e3e;
+}
+
+.star {
+  font-size: 24px;
+}
+
+.card-star{
+  right: 10%;
+  position: absolute;
+  top:15px;
+}
+
+.card{
+  width: 100%;
+  height: 100%;
 }

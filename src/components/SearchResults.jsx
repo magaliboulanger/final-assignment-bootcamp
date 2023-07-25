@@ -1,8 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
-// import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 import ComicsListComponent from "./ComicsListComponent";
 
 export const SearchResult = ({ result, setComics }) => {
@@ -37,8 +33,8 @@ export const SearchResult = ({ result, setComics }) => {
       .then((response) => response.json())
       .then((json) => {
         setComicsResults(json.data.results);
-        setComics(json.data.results);
         console.log(json.data.results);
+        setComics(json.data.results);
       });
   };
 
@@ -50,36 +46,41 @@ export const SearchResult = ({ result, setComics }) => {
   };
 
   return (
-    <div
-      className="search-result"
-      onClick={() => {
-        toggleShowList();
-      }}
-    >
-      {/* <button className="star-container save-character" onClick={toggleStar}>
+    <div className="search-result">
+      <button
+        className={`favorite-button ${isStarred ? "active" : ""}`}
+        onClick={toggleStar}
+      >
         {isStarred ? (
-          <FontAwesomeIcon className="white-star" icon={solidStar} />
+          <span className="star white card-star">&#9733;</span>
         ) : (
-          <FontAwesomeIcon className="white-star" icon={emptyStar} />
+          <span className="star white card-star">&#9734;</span>
         )}
-      </button> */}
+      </button>
+
       <img
         className="full-img"
         src={result.thumbnail.path + "." + result.thumbnail.extension}
       ></img>
-      <p className="character-name">{result.name}</p>
-      <div className={showComicsList ? "overlay" : ""}>
-        {showComicsList ? (
-          <div className="comics-pop-up">
-            <ComicsListComponent
-              closeList={toggleShowList}
-              results={comicsResults}
-              name={result.name}
-            />
-          </div>
-        ) : (
-          ""
-        )}
+      <div className="card"
+        onClick={() => {
+          toggleShowList();
+        }}
+      >
+        <p className="character-name">{result.name}</p>
+        <div className={showComicsList ? "overlay" : ""}>
+          {showComicsList ? (
+            <div className="comics-pop-up">
+              <ComicsListComponent
+                closeList={toggleShowList}
+                results={comicsResults}
+                name={result.name}
+              />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );
