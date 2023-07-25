@@ -1,35 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { SearchResultsList } from "../components/SearchResultsList";
+import { getCharacters } from "../ApiFetcher";
 
-export default function Home({ setComics }) {
+export default function Home({ setResults, setComics, handleSave, isSaved }) {
   const [randomCharacters, setRandomCharacters] = useState([]);
-  window.onload = () => {
-    const randomLetter= String.fromCharCode(Math.floor(Math.random() * 256));
-    fetch("https://gateway.marvel.com:443/v1/public/characters?limit=20&nameStartsWith="+randomLetter+"&apikey=" +
-        import.meta.env.VITE_REACT_APP_MARVEL_API_KEY +
-        "&hash=" +
-        import.meta.env.VITE_REACT_APP_API_HASH +
-        "&ts=" +
-        import.meta.env.VITE_API_TS,
-      {
-        method: "GET",
-        withCredentials: true,
-        mode: "cors",
-        headers: {
-          Accept: "application/json",
-        },
+  const randomString = [
+    "spi",
+    "lo",
+    "po",
+    "pa",
+    "pe",
+    "yo",
+    "mr",
+    "me",
+    "ma",
+    "mi",
+    "ra",
+    "re",
+    "se",
+    "sa",
+    "ca",
+    "ce",
+    "wa",
+    "we",
+    "e",
+    "o",
+  ];
+  const nav = useNavigate();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await getCharacters(
+          randomString[Math.floor(Math.random() * randomString.length)]
+        );
+        const data = await response.json();
+        if (data.data.results.length == 0) nav("/");
+        setRandomCharacters(data.data.results);
+        setResults(data.data.results);
+      } catch (e) {
+        console.log(e);
       }
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.data.results.length == 0) location.reload();
-        setRandomCharacters(json.data.results);
-      });
-  };
+    }
+    fetchData();
+  }, []);
 
   return (
     <div>
-      <SearchResultsList results={randomCharacters} setComics={setComics} />
+      <SearchResultsList
+        setResults={setResults}
+        results={randomCharacters}
+        setComics={setComics}
+        handleSave={handleSave}
+        isSaved={isSaved}
+      />
     </div>
   );
 }

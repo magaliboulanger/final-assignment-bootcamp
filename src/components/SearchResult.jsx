@@ -1,46 +1,31 @@
 import { useState } from "react";
 import ComicsListComponent from "./ComicsListComponent";
+import { getComics } from "../ApiFetcher";
 
-export const SearchResult = ({ result, setComics }) => {
-  const [isStarred, setIsStarred] = useState(false);
+export const SearchResult = ({ result, setComics, handleSave, isSaved }) => {
+  const [isStarred, setIsStarred] = useState(isSaved(result.id));
   const [showComicsList, setComicsListShown] = useState(false);
   const [comicsResults, setComicsResults] = useState([]);
+
   const characterId = result.id;
 
   const toggleStar = () => {
+    if (!isStarred) {
+      handleSave(result.id);
+    }
     setIsStarred(!isStarred);
-  };
-
-  const getComics = async () => {
-    fetch(
-      "https://gateway.marvel.com:443/v1/public/characters/" +
-        characterId +
-        "/comics?orderBy=onsaleDate&apikey=" +
-        import.meta.env.VITE_REACT_APP_MARVEL_API_KEY +
-        "&hash=" +
-        import.meta.env.VITE_REACT_APP_API_HASH +
-        "&ts=" +
-        import.meta.env.VITE_API_TS,
-      {
-        method: "GET",
-        withCredentials: true,
-        mode: "cors",
-        headers: {
-          Accept: "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setComicsResults(json.data.results);
-        console.log(json.data.results);
-        setComics(json.data.results);
-      });
   };
 
   const toggleShowList = async () => {
     if (!showComicsList && comicsResults.length == 0) {
-      await getComics();
+      try {
+        const response = await getComics(characterId);
+        const data = await response.json();
+        setComicsResults(data.data.results);
+        setComics(data.data.results);
+      } catch (e) {
+        console.log(e);
+      }
     }
     setComicsListShown(!showComicsList);
   };
@@ -57,12 +42,12 @@ export const SearchResult = ({ result, setComics }) => {
           <span className="star white card-star">&#9734;</span>
         )}
       </button>
-
       <img
         className="full-img"
         src={result.thumbnail.path + "." + result.thumbnail.extension}
       ></img>
-      <div className="card"
+      <div
+        className="card"
         onClick={() => {
           toggleShowList();
         }}
@@ -75,6 +60,8 @@ export const SearchResult = ({ result, setComics }) => {
                 closeList={toggleShowList}
                 results={comicsResults}
                 name={result.name}
+                handleSave={handleSave}
+                isSaved={isSaved}
               />
             </div>
           ) : (

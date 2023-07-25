@@ -1,38 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../resources/images/Marvel_Logo.png";
+import { getCharacters } from "../ApiFetcher";
 
-function SearchBar({ setResults }) {
-  const [isStarred, setIsStarred] = useState(false);
+function SearchBar() {
+  const [isStarred, setIsStarred] = useState(window.location.href.includes("favorites"));
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
-  const getCharacters = (input) => {
-    fetch(
-      "https://gateway.marvel.com:443/v1/public/characters?apikey=" +
-        import.meta.env.VITE_REACT_APP_MARVEL_API_KEY +
-        "&hash=" +
-        import.meta.env.VITE_REACT_APP_API_HASH +
-        "&ts=" +
-        import.meta.env.VITE_API_TS +
-        "&nameStartsWith=" +
-        input,
-      {
-        method: "GET",
-        withCredentials: true,
-        mode: "cors",
-        headers: {
-          Accept: "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setResults(json.data.results);
-        navigate(`/characters/?name=${input}`);
-      });
-  };
+  useEffect(() => {
+    setIsStarred(window.location.href.includes("favorites"));
+    
+  });
+
   const toggleStar = () => {
+    if (!isStarred) navigate("/favorites");
+    else navigate("/");
     setIsStarred(!isStarred);
   };
 
@@ -42,9 +25,10 @@ function SearchBar({ setResults }) {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && input != "") {
-      getCharacters(input);
+      navigate(`/characters/?name=${input}`);
     }
   };
+  
   const openHome = () => {
     navigate(`/`);
   };
