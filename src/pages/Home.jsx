@@ -4,11 +4,8 @@ import { SearchResultsList } from "../components/SearchResultsList";
 export default function Home({ setComics }) {
   const [randomCharacters, setRandomCharacters] = useState([]);
   window.onload = () => {
-    const randomLetter = String.fromCharCode(Math.floor(Math.random() * 256));
-    fetch(
-      "https://gateway.marvel.com:443/v1/public/characters?limit=20&nameStartsWith=" +
-        randomLetter +
-        "&apikey=" +
+    const randomLetter= String.fromCharCode(Math.floor(Math.random() * 256));
+    fetch("https://gateway.marvel.com:443/v1/public/characters?limit=20&nameStartsWith="+randomLetter+"&apikey=" +
         import.meta.env.VITE_REACT_APP_MARVEL_API_KEY +
         "&hash=" +
         import.meta.env.VITE_REACT_APP_API_HASH +

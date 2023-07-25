@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../resources/images/Marvel_Logo.png";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
-// import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 
 function SearchBar({ setResults }) {
   const [isStarred, setIsStarred] = useState(false);
   const [input, setInput] = useState("");
-  const [showComicsList, setComicsListShown] = useState(false);
   const navigate = useNavigate();
 
   const getCharacters = (input) => {
@@ -33,13 +29,8 @@ function SearchBar({ setResults }) {
       .then((response) => response.json())
       .then((json) => {
         setResults(json.data.results);
-        console.log(json.data.results);
         navigate(`/characters/?name=${input}`);
       });
-  };
-
-  const toggleComicsList = () => {
-    setComicsListShown(!showComicsList);
   };
   const toggleStar = () => {
     setIsStarred(!isStarred);
@@ -78,12 +69,15 @@ function SearchBar({ setResults }) {
               />
             </div>
           </div>
-          <button className="star-container" onClick={toggleStar}>
-            {/* {isStarred ? (
-              <FontAwesomeIcon className="star" icon={solidStar} />
+          <button
+            className={`favorite-button ${isStarred ? "active" : ""}`}
+            onClick={toggleStar}
+          >
+            {isStarred ? (
+              <span className="star">&#9733;</span>
             ) : (
-              <FontAwesomeIcon className="star" icon={emptyStar} />
-            )} */}
+              <span className="star">&#9734;</span>
+            )}
           </button>
         </nav>
       </header>

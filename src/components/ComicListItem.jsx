@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
-// import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 
 export default function ComicListItem({ id, title, description, image }) {
   const [isStarred, setIsStarred] = useState(false);
@@ -17,16 +14,19 @@ export default function ComicListItem({ id, title, description, image }) {
         <img className="item-image" src={image.path + "." + image.extension} />
       </div>
       <div className="text">
-        <div>
+        <div className="title">
           <Link className="item-title" to={`/character/${id}/comics`}>
             {title}
           </Link>
-          <button className="star-container" onClick={toggleStar}>
-            {/* {isStarred ? (
-              <FontAwesomeIcon className="star" icon={solidStar} />
+          <button
+            className={`favorite-button ${isStarred ? "active" : ""}`}
+            onClick={toggleStar}
+          >
+            {isStarred ? (
+              <span className="star">&#9733;</span>
             ) : (
-              <FontAwesomeIcon className="star" icon={emptyStar} />
-            )} */}
+              <span className="star">&#9734;</span>
+            )}
           </button>
         </div>
 
