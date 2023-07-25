@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function ComicListItem({ id, title, description, image }) {
-  const [isStarred, setIsStarred] = useState(false);
+export default function ComicListItem({ id, title, description, image, handleSave,isSaved }) {
+  const [isStarred, setIsStarred] = useState(isSaved(id));
 
   const toggleStar = () => {
+    //TO DO : Save favorite comics
+    // if (!isStarred) {
+    //   handleSave(id);
+    // }
     setIsStarred(!isStarred);
   };
 
