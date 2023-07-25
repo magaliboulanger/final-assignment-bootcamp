@@ -1,48 +1,38 @@
 import { useState } from "react";
-import logo from "../resources/images/Marvel_Logo.png";
-import SearchBar from "../components/search-bar/SearchBar";
-import { SearchResultsList } from "../components/search-results-list/SearchResultsList.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
-import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
-import "./Home.css";
-import ComicsListComponent from "../components/comic-list/ComicsListComponent";
+import { SearchResultsList } from "../components/SearchResultsList";
 
-export default function Home() {
-  const [results, setResults] = useState([]);
-  const [isStarred, setIsStarred] = useState(false);
-  const [showComicsList, setComicsListShown] = useState(false);
-
-  const toggleStar = () => {
-    setIsStarred(!isStarred);
-  };
-
-  const toggleComicsList = () => {
-    setComicsListShown(!showComicsList);
+export default function Home({ setComics }) {
+  const [randomCharacters, setRandomCharacters] = useState([]);
+  window.onload = () => {
+    const randomLetter = String.fromCharCode(Math.floor(Math.random() * 256));
+    fetch(
+      "https://gateway.marvel.com:443/v1/public/characters?limit=20&nameStartsWith=" +
+        randomLetter +
+        "&apikey=" +
+        import.meta.env.VITE_REACT_APP_MARVEL_API_KEY +
+        "&hash=" +
+        import.meta.env.VITE_REACT_APP_API_HASH +
+        "&ts=" +
+        import.meta.env.VITE_API_TS,
+      {
+        method: "GET",
+        withCredentials: true,
+        mode: "cors",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.data.results.length == 0) location.reload();
+        setRandomCharacters(json.data.results);
+      });
   };
 
   return (
     <div>
-      <header>
-        <nav className="nav-bar">
-          <img className="logo" src={logo} alt="Marvel Logo"></img>
-          <div className="search-bar-container">
-            <SearchBar setResults={setResults} />
-          </div>
-          <button className="star-container" onClick={toggleStar}>
-            {isStarred ? (
-              <FontAwesomeIcon className="star" icon={solidStar} />
-            ) : (
-              <FontAwesomeIcon className="star" icon={emptyStar} />
-            )}
-          </button>
-        </nav>
-      </header>
-      <div className="main-content">
-        {results && results.length > 0 && (
-          <SearchResultsList results={results} toggle={toggleComicsList} />
-        )}
-      </div>
+      <SearchResultsList results={randomCharacters} setComics={setComics} />
     </div>
   );
 }

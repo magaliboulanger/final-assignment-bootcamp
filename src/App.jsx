@@ -1,18 +1,32 @@
 import { useState } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import Home from "./pages/Home";
-import ErrorPage from "./pages/ErrorPage";
+import ComicPage from "./pages/ComicPage";
+import SearchBar from "./components/SearchBar";
+import { SearchResultsList} from "./components/SearchResultsList";
 
 function App() {
+  const [results, setResults] = useState([]);
+  const [comics, setComics] = useState([]);
   return (
     <div className="App">
-      <Router>
+      <BrowserRouter>
+        <SearchBar setResults={setResults} />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<ErrorPage />} /> {/* Error path */} 
+          <Route path="/" element={<Home/>} setComics={setComics} />
+          <Route
+            path="/characters"
+            element={
+              <SearchResultsList results={results} setComics={setComics} />
+            }
+          />
+          <Route
+            path="/character/:key/comics"
+            element={<ComicPage comicData={comics} />}
+          />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }
