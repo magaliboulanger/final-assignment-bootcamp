@@ -35,7 +35,6 @@ export default function Home({ setResults, setComics, handleSave, isSaved }) {
           randomString[Math.floor(Math.random() * randomString.length)]
         );
         const data = await response.json();
-        if (data.data.results.length == 0) nav("/");
         setRandomCharacters(data.data.results);
         setResults(data.data.results);
       } catch (e) {

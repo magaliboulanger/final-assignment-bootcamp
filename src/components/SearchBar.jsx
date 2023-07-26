@@ -3,15 +3,14 @@ import { useNavigate } from "react-router-dom";
 import logo from "../resources/images/Marvel_Logo.png";
 import { getCharacters } from "../ApiFetcher";
 
-function SearchBar() {
-  const [isStarred, setIsStarred] = useState(window.location.href.includes("favorites"));
+function SearchBar({ setResults }) {
+  const [isStarred, setIsStarred] = useState(false);
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsStarred(window.location.href.includes("favorites"));
-    
-  });
+  }, []);
 
   const toggleStar = () => {
     if (!isStarred) navigate("/favorites");
@@ -23,12 +22,19 @@ function SearchBar() {
     setInput(value);
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = async (event) => {
     if (event.key === "Enter" && input != "") {
-      navigate(`/characters/?name=${input}`);
+      try {
+        const response = await getCharacters(input);
+        const data = await response.json();
+        await setResults(data.data.results);
+      } catch (e) {
+        console.log(e);
+      }
+      navigate(`/characters/?character=${input}`);
     }
   };
-  
+
   const openHome = () => {
     navigate(`/`);
   };

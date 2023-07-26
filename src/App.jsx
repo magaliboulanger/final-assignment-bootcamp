@@ -21,29 +21,24 @@ function App() {
   };
 
   const removeSaved = (id) => {
-    let favs = JSON.parse(localStorage.getItem("Favorites"));
-    for (let i = 0; i < favs.length; i++) {
-      if (favs[i].id === id) {
-        delete favs[i];
-        break;
-      }
-      localStorage.setItem("Favorites", JSON.stringify(favs));
-    }
+    const favs = JSON.parse(localStorage.getItem("Favorites"));
+    //console.log(favs);
+    const newFavs = favs.filter((item) => item.id !== id);
+    //console.log(favs.length +"  "+ newFavs.length);
+    localStorage.setItem("Favorites", JSON.stringify(newFavs));
   };
 
   const handleSave = (id) => {
     const item = results.filter((result) => result.id === id)[0];
+    //console.log(JSON.parse(localStorage.getItem("Favorites")) );
     if (JSON.parse(localStorage.getItem("Favorites")) != null && isSaved(id)) {
       removeSaved(id);
-      console.log("elimino");
     } else {
       let favs = JSON.parse(localStorage.getItem("Favorites"));
       if (favs != null) favs.push(item);
       else favs = [item];
       localStorage.setItem("Favorites", JSON.stringify(favs));
-      console.log("agrego");
     }
-    console.log(JSON.parse(localStorage.getItem("Favorites")));
   };
 
   return (

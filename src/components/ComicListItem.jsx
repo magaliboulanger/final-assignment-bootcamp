@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function ComicListItem({ id, title, description, image, handleSave,isSaved }) {
+export default function ComicListItem({
+  id,
+  title,
+  description,
+  image,
+  handleSave,
+  isSaved,
+}) {
   const [isStarred, setIsStarred] = useState(isSaved(id));
 
   const toggleStar = () => {
@@ -34,7 +41,11 @@ export default function ComicListItem({ id, title, description, image, handleSav
           </button>
         </div>
 
-        <p className="item-description">{description && description!=""?description:"No hay una descripción."}</p>
+        <p className="item-description">
+          {description && description != ""
+            ? description
+            : "No hay una descripción."}
+        </p>
       </div>
     </div>
   );

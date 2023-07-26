@@ -1,7 +1,13 @@
 import ComicListItem from "./ComicListItem";
 import { useNavigate } from "react-router-dom";
 
-export default function ComicsListComponent({ name, results, closeList, handleSave, isSaved }) {
+export default function ComicsListComponent({
+  name,
+  results,
+  closeList,
+  handleSave,
+  isSaved,
+}) {
   return (
     <div className="comics-list">
       <button

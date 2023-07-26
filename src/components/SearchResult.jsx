@@ -1,25 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ComicsListComponent from "./ComicsListComponent";
-import { getComics } from "../ApiFetcher";
+import { getComicsByTitle, getComicsByCharacter } from "../ApiFetcher";
+import { useLocation } from "react-router-dom";
 
 export const SearchResult = ({ result, setComics, handleSave, isSaved }) => {
   const [isStarred, setIsStarred] = useState(isSaved(result.id));
   const [showComicsList, setComicsListShown] = useState(false);
   const [comicsResults, setComicsResults] = useState([]);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const comicParam = params.getAll("comic");
 
   const characterId = result.id;
 
   const toggleStar = () => {
-    if (!isStarred) {
-      handleSave(result.id);
-    }
+    handleSave(result.id);
     setIsStarred(!isStarred);
   };
 
   const toggleShowList = async () => {
     if (!showComicsList && comicsResults.length == 0) {
       try {
-        const response = await getComics(characterId);
+        const response = await getComicsByCharacter(characterId);
         const data = await response.json();
         setComicsResults(data.data.results);
         setComics(data.data.results);
