@@ -1,6 +1,6 @@
 import { SearchResult } from "./SearchResult";
 import { useLocation } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect} from "react";
 import { getCharacters } from "../ApiFetcher";
 
 export const SearchResultsList = ({
@@ -12,13 +12,17 @@ export const SearchResultsList = ({
 }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const nameParam = params.get("name");
-
+  const nameParam = params.getAll("character");
+  
   const getData = async () => {
     try {
-      const response = await getCharacters(nameParam);
-      const data = await response.json();
-      await setResults(data.data.results);
+      let out = [];
+      for (let i = 0; i < nameParam.length; i++) {
+        const response = await getCharacters(nameParam[i]);
+        const data = await response.json();
+        out = out.concat(data.data.results);
+      }
+      await setResults(out);
     } catch (e) {
       console.log(e);
     }
@@ -26,7 +30,7 @@ export const SearchResultsList = ({
 
   useEffect(() => {
     getData();
-  },[nameParam]);
+  }, []);
 
   return (
     <div className="results-list main-content">
